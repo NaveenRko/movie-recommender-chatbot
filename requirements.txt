@@ -3,8 +3,6 @@ pandas
 scikit-learn
 numpy
 requests
-sqlite3-binary
 rapidfuzz
 tmdbv3api
 python-dotenv
-sentence-transformers
