@@ -3,7 +3,7 @@ import pandas as pd
 # Define your metadata lists here
 LANGUAGES = ['Telugu', 'Tamil', 'Kannada', 'Malayalam']
 # Sample actor and director lists
-df = pd.read_csv("South_Indian_Movies_cleaned.csv")
+df = pd.read_csv("South_Indian_movies_cleaned.csv")
 alias_df = pd.read_csv("alias_map.csv")
 
 #--------------ACTOR & alias maping for actors----------------------------
