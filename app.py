@@ -203,13 +203,13 @@ password = st.text_input("Enter admin password:", type="password")
 
 if password == st.secrets["admin"]["admin_password"]:   # set this in Streamlit Cloud secrets
     conn = sqlite3.connect("chat_feedback.db")
-    df = pd.read_sql("SELECT * FROM chat_feedback.db", conn)
+    df = pd.read_sql("SELECT * FROM feedback", conn)
     
     st.write(f"✅ Total feedback collected: {len(df)}")
     st.dataframe(df)
     
     csv = df.to_csv(index=False).encode("utf-8")
-    st.download_button("⬇️ Download Feedback (CSV)", data=csv, file_name="chat_feedback.csv")
+    st.download_button("⬇️ Download Feedback (CSV)", data=csv, file_name="feedback.csv")
     
     with open("chat_feedback.db", "rb") as f:
         st.download_button("⬇️ Download Feedback Database", data=f, file_name="chat_feedback.db")
