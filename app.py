@@ -143,6 +143,25 @@ with col2:
             )
 
     # Feedback Buttons
+        # if st.session_state.chat_history and "last_user_input" in st.session_state:
+        #     feedback = st.radio("Was my response helpful?", ("👍 Yes", "👎 No"), horizontal=True)
+        #     if feedback:
+        #         if feedback == "👍 Yes":
+        #             store_feedback(
+        #                 st.session_state.last_user_input,
+        #                 st.session_state.last_bot_response,
+        #                 st.session_state.last_intent,
+        #                 "positive"
+        #             )
+        #         else:
+        #             store_feedback(
+        #                 st.session_state.last_user_input,
+        #                 st.session_state.last_bot_response,
+        #                 st.session_state.last_intent,
+        #                 "negative"
+        #             )
+        #         st.success("Thanks for your feedback!")
+
     if st.session_state.chat_history and "last_user_input" in st.session_state:
         feedback_col1, feedback_col2 = st.columns([1, 1])
         with feedback_col1:
@@ -173,5 +192,28 @@ create_feedback_db()
 #     st.dataframe(feedback_df)
 #     conn.close()
 
+import streamlit as st
+import sqlite3
+import pandas as pd
+
+st.title("📊 Admin Feedback Dashboard")
+
+# Simple password protection
+password = st.text_input("Enter admin password:", type="password")
+
+if password == st.secrets["admin"]["admin_password"]:   # set this in Streamlit Cloud secrets
+    conn = sqlite3.connect("feedback.db")
+    df = pd.read_sql_query("SELECT * FROM feedback", conn)
+    
+    st.write(f"✅ Total feedback collected: {len(df)}")
+    st.dataframe(df)
+    
+    csv = df.to_csv(index=False).encode("utf-8")
+    st.download_button("⬇️ Download Feedback (CSV)", data=csv, file_name="feedback.csv")
+    
+    with open("feedback.db", "rb") as f:
+        st.download_button("⬇️ Download Feedback Database", data=f, file_name="feedback.db")
+else:
+    st.warning("🔒 Enter password to access the feedback dashboard")
 
 
