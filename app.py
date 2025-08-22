@@ -203,7 +203,7 @@ password = st.text_input("Enter admin password:", type="password")
 
 if password == st.secrets["admin"]["admin_password"]:   # set this in Streamlit Cloud secrets
     conn = sqlite3.connect("feedback.db")
-    df = pd.read_sql_query("SELECT * FROM feedback", conn)
+    df = pd.read_sql_query("SELECT * FROM chat_feedback.db", conn)
     
     st.write(f"✅ Total feedback collected: {len(df)}")
     st.dataframe(df)
