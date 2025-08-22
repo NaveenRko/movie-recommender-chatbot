@@ -202,17 +202,17 @@ st.title("📊 Admin Feedback Dashboard")
 password = st.text_input("Enter admin password:", type="password")
 
 if password == st.secrets["admin"]["admin_password"]:   # set this in Streamlit Cloud secrets
-    conn = sqlite3.connect("feedback.db")
-    df = pd.read_sql_query("SELECT * FROM chat_feedback.db", conn)
+    conn = sqlite3.connect("chat_feedback.db")
+    df = pd.read_sql("SELECT * FROM chat_feedback.db", conn)
     
     st.write(f"✅ Total feedback collected: {len(df)}")
     st.dataframe(df)
     
     csv = df.to_csv(index=False).encode("utf-8")
-    st.download_button("⬇️ Download Feedback (CSV)", data=csv, file_name="feedback.csv")
+    st.download_button("⬇️ Download Feedback (CSV)", data=csv, file_name="chat_feedback.csv")
     
-    with open("feedback.db", "rb") as f:
-        st.download_button("⬇️ Download Feedback Database", data=f, file_name="feedback.db")
+    with open("chat_feedback.db", "rb") as f:
+        st.download_button("⬇️ Download Feedback Database", data=f, file_name="chat_feedback.db")
 else:
     st.warning("🔒 Enter password to access the feedback dashboard")
 
